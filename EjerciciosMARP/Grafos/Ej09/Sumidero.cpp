@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 
-using namespace std;
+#include "Drain.h" // propios o los de las estructuras de datos de clase
 
-#include "BiggerStain.h"  // propios o los de las estructuras de datos de clase
+using namespace std;
 
 /*@ <answer>
 
@@ -22,22 +22,26 @@ using namespace std;
 bool resuelveCaso() {
 
 	// leer los datos de la entrada
-	int f, c;
-	cin >> f >> c;
+	int n, a;
+	cin >> n >> a;
 	if (!std::cin)  // fin de la entrada
 		return false;
 
-	Mapa map(f);
-
-	for (string& line : map) {
-		cin >> line;
+	// resolver el caso posiblemente llamando a otras funciones
+	Digrafo graph(n);
+	for (size_t i = 0; i < a; i++){
+		int firstV, secondV;
+		cin >> firstV >> secondV;
+		graph.ponArista(firstV, secondV);
 	}
 
-	// resolver el caso posiblemente llamando a otras funciones
-	BiggerStain sol(map);
-
+	Drain sol(graph);
 	// escribir la solución
-	cout << sol.stains() << " " << sol.biggerStain() << "\n";
+
+	if (sol.drain() == -1)
+		cout << "NO\n";
+	else
+		cout << "SI " << sol.drain() << "\n";
 
 	return true;
 }
